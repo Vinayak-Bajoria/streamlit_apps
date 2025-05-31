@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 
-train_df = pd.read_csv('/Users/vbajoria/desktop/titanic-train.csv')
+train_df = pd.read_csv('./data/titanic-train.csv')
 print(train_df.head(5))
 
 def manipluate_df(df):
