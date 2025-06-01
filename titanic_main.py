@@ -79,6 +79,55 @@ st.pyplot(fig)
 
 
 
+def manipulate_user_input( sex, p_class):
+    if sex == 'Male':
+        sex =0
+    else:
+        sex =1
+
+    f_class = 1 if p_class == 'First Class' else 0
+    s_class = 1 if p_class == 'Second Class' else 0
+    t_class = 1 if p_class == 'Third Class' else 0
+    return f_class, s_class, t_class, sex
+
+
+def predict_passenger_survival(f,s,t,e, a):
+
+    input_data = scaler.transform([[e,a, f,s,t]])
+    prediction = model.predict(input_data)
+
+    predict_probability = model.predict_proba(input_data)
+
+    return prediction, predict_probability
+
+
+def get_user_input():
+    name = st.text_input("Enter the passenger name")
+    sex = st.selectbox("choose gender", options=["Male", "Female"])
+    age = st.slider("Select age", 1, 100, 1)
+    p_class = st.selectbox("Passenger class", options=['First Class', 'Second Class', 'Third Class'])
+    print(p_class)
+
+    f_class, s_class, t_class, sex = manipulate_user_input(sex, p_class)
+
+    prediction, pred_prob = predict_passenger_survival(f_class, s_class, t_class, sex, age)
+
+    if prediction[0] == 1:
+        st.subheader("Passenger {} would have survived with probability {}".format(name, round(pred_prob[0][1]*100 , 3)))
+    else:
+        st.subheader("Passenger {} would not have survived with probability {}".format(name, round(pred_prob[0][1]*100 , 3)))
+
+get_user_input()
+
+
+
+
+
+
+
+
+
+
 
 
 
